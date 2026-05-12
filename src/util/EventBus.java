@@ -1,21 +1,19 @@
 package util;
 
-import jdk.jfr.Event;
-import jdk.jfr.EventType;
 import model.hub.DeviceEvent;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 public final class EventBus {
-    private static volatile EventBus instance;
 
-    private final Map<EventType, List<Consumer<DeviceEvent>>> listenersByType = new ConcurrentHashMap<>();
+    private static volatile EventBus instance;
+    private final Map<AppConstants.EventType, List<Consumer<DeviceEvent>>> subscribers;
 
     private EventBus() {
+        subscribers = new HashMap<>();
     }
 
     public static EventBus getInstance() {
@@ -29,19 +27,15 @@ public final class EventBus {
         return instance;
     }
 
-    public void subscribe(EventType type, Consumer<DeviceEvent> listener) {
-        listenersByType
-                .computeIfAbsent(type, key -> new CopyOnWriteArrayList<>())
-                .add(listener);
+    public void subscribe(AppConstants.EventType type, Consumer<DeviceEvent> handler) {
+        subscribers.computeIfAbsent(type, k -> new ArrayList<>()).add(handler);
     }
 
     public void publish(DeviceEvent event) {
-        List<Consumer<DeviceEvent>> listeners = listenersByType.get(event.getEventType());
-        if (listeners == null) {
-            return;
-        }
-        for (Consumer<DeviceEvent> listener : listeners) {
-            listener.accept(event);
+        List<Consumer<DeviceEvent>> handlers = subscribers.get(event.getEventType());
+        if (handlers == null) return;
+        for (Consumer<DeviceEvent> handler : handlers) {
+            handler.accept(event);
         }
     }
 }
