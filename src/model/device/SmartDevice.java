@@ -3,7 +3,6 @@ import model.command.Command;
 import model.hub.DeviceEvent;
 import model.room.Room;
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class SmartDevice {
 
@@ -13,14 +12,14 @@ public abstract class SmartDevice {
     protected DeviceStatus status;
     protected ArrayList<DeviceObserver> observers;
 
-    public SmartDevice (String id, String name ){
+    protected SmartDevice (String id, String name ){
         this.id = id;
         this.name = name;
-        this.status = DeviceStatus.ONLINE;
-        observers = new List<DeviceObserver>();
+        this.status = DeviceStatus.OFFLINE;
+        observers = new ArrayList<>();
     }
     public abstract void executeCommand( Command c); //abstracted
-    public abstract String getStatusSummery(); //abstracted
+    public abstract String getStatusSummary(); //abstracted
     public void addObserver(DeviceObserver o){
         observers.add(o);
     }
