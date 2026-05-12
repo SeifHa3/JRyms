@@ -13,7 +13,7 @@ public class AppConstants {
 
     public static final List<String> DEFAULT_ROOM_NAMES = List.of("Living Room", "Bedroom", "Kitchen");
 
-    public enum DeviceEventType{
+    public enum EventType{
         DEVICE_ADDED,
         DEVICE_REMOVED,
         TEMP_CHANGED,
