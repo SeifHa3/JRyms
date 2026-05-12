@@ -17,6 +17,13 @@ public class CommandHistory {
         redoStack.clear();
     }
 
+    public boolean canUndo() {
+        return !undoStack.isEmpty();
+    }
+    public boolean canRedo() {
+        return !redoStack.isEmpty();
+    }
+
     public void undo() {
         if (canUndo()) {
             Command c = undoStack.pop();
