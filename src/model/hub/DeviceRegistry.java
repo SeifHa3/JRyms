@@ -38,8 +38,8 @@ public class DeviceRegistry {
         return new ArrayList<>(devices.values());
     }
 
-    public SmartDevice removeDevice(String id) {
-        return devices.remove(id);
+    public void removeDevice(String id) {
+         devices.remove(id);
     }
 
     public boolean contains(String id){
