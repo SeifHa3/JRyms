@@ -40,6 +40,4 @@ public class CommandHistory {
         }
     }
 
-    public boolean canUndo() { return !undoStack.isEmpty(); }
-    public boolean canRedo() { return !redoStack.isEmpty(); }
 }
