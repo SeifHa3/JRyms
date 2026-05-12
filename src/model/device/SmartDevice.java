@@ -1,28 +1,26 @@
 package model.device;
-
+import model.command.Command;
+import model.hub.DeviceEvent;
+import model.room.Room;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 
 public abstract class SmartDevice {
 
-    protected final String  Id;
+    protected final String id;
     protected String name;
-    protected String location;
-
     protected Room room;
     protected DeviceStatus status;
-    protected List<DeviceObserver> observers;
+    protected ArrayList<DeviceObserver> observers;
 
     public SmartDevice (String id, String name ){
-        this.Id = id;
+        this.id = id;
         this.name = name;
         this.status = DeviceStatus.ONLINE;
         observers = new List<DeviceObserver>();
     }
-    public void executeCommand( Command c){}//abstracted
-    public String getStatusSummery(){
-        return "";
-    }//abstracted
+    public abstract void executeCommand( Command c); //abstracted
+    public abstract String getStatusSummery(); //abstracted
     public void addObserver(DeviceObserver o){
         observers.add(o);
     }
@@ -30,12 +28,14 @@ public abstract class SmartDevice {
         observers.remove(o);
     }
 
-    protected void notifyObservers(DeviceEvent){//iterates along the list of observers and cals onDeviceUpdate on each one
-
+    protected void notifyObservers(DeviceEvent event){//iterates along the list of observers and cals onDeviceUpdate on each one
+        for (DeviceObserver observer: observers){
+            observer.onDeviceUpdate(event);
+        }
     }
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public String getName() {
@@ -46,7 +46,7 @@ public abstract class SmartDevice {
         this.name = name;
     }
     public Room getRoom(){
-        return Room;
+        return room;
     }
 
     public void setRoom(Room room) {
