@@ -24,7 +24,7 @@ public class CommandService {
         return history.canUndo();
     }
     public boolean canRedo(){
-        return history.canUndo();
+        return history.canRedo();
     }
 
 }
