@@ -3,6 +3,7 @@ import model.command.Command;
 import model.hub.DeviceEvent;
 import model.room.Room;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class SmartDevice {
 
