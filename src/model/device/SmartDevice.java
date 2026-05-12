@@ -10,7 +10,7 @@ public abstract class SmartDevice {
     protected String name;
     protected Room room;
     protected DeviceStatus status;
-    protected ArrayList<DeviceObserver> observers;
+    protected List<DeviceObserver> observers;
 
     protected SmartDevice (String id, String name ){
         this.id = id;
