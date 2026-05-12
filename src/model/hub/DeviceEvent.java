@@ -10,12 +10,13 @@ public class DeviceEvent {
     private final String deviceId;
     private final AppConstants.EventType eventType;
     private final LocalDateTime timestamp;
-    private Object payload; //Object variable that can be replaced by anything like: Device_added which would be String or Temp_Changed: double
+    private final Object payload; //Object variable that can be replaced by anything like: Device_added which would be String or Temp_Changed: double
 
-    public DeviceEvent(String deviceId, AppConstants.EventType eventType, LocalDateTime timestamp) {
+    public DeviceEvent(String deviceId, AppConstants.EventType eventType, Object payload) {
         this.deviceId = deviceId;
         this.eventType = eventType;
-        this.timestamp = timestamp;
+        this.payload = payload;
+        this.timestamp = LocalDateTime.now();
     }
 
     public String getDeviceId()                  {
