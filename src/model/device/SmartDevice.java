@@ -8,7 +8,7 @@ public abstract class SmartDevice {
     protected final String  Id;
     protected String name;
     protected String location;
-    
+
     protected Room room;
     protected DeviceStatus status;
     protected List<DeviceObserver> observers;
