@@ -1,7 +1,6 @@
 package model.hub;
 
 import util.AppConstants;
-import util.AppConstants;
 
 import java.time.LocalDateTime;
 
