@@ -1,5 +1,6 @@
 package controller;
 
+import decorator.DeviceDecorator;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -78,8 +79,8 @@ public class DashboardController implements DeviceObserver {
                 Label statusLabel = new Label(d.getStatus().toString());
                 Button controlBtn = new Button("Control");
                 controlBtn.setOnAction(e -> {
-                    if (d instanceof SmartAC)
-                        ViewManager.getInstance().showACControl((SmartAC) d);
+                    SmartAC ac = extractAC(d);
+                    if (ac != null) ViewManager.getInstance().showACControl(ac);
                 });
                 HBox row = new HBox(15, nameLabel, statusLabel, controlBtn);
                 row.setPadding(new Insets(2, 0, 2, 16));
@@ -87,6 +88,14 @@ public class DashboardController implements DeviceObserver {
             }
             rows.getChildren().add(section);
         }
+    }
+
+    private SmartAC extractAC(SmartDevice device) {
+        if (device instanceof SmartAC) return (SmartAC) device;
+        if (device instanceof DeviceDecorator) {
+            return extractAC(((DeviceDecorator) device).getWrapped());
+        }
+        return null;
     }
 
     public void onUndoClick() { commandService.undo(); }
