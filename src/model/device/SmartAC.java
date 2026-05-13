@@ -74,10 +74,7 @@ public class SmartAC extends SmartDevice {
     public double getCurrentTemp() {
         return currentTemp;
     }
-
-    public void setCurrentTemp(double currentTemp) {
-        this.currentTemp = currentTemp;
-    }
+    
 
     @Override
     public String getStatusSummary() {
