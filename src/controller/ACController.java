@@ -57,9 +57,7 @@ public class ACController implements DeviceObserver {
         view.getRedoBtn().setOnAction(e -> { commandService.redo(); refreshButtonStates(); });
 
         view.getBackBtn().setOnAction(e ->
-                ViewManager.getInstance().showDashboard(
-                        new view.DashboardView().build()
-                )
+                ViewManager.getInstance().showDashboard()
         );
     }
 

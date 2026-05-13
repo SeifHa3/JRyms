@@ -16,10 +16,11 @@ public class Main extends Application {
         bootstrapDevices();
 
         DeviceService deviceService = new DeviceService();
-        CommandService commandService = new CommandService();
 
         DashboardView dashboardView = new DashboardView();
-        DashboardController controller = new DashboardController(deviceService, commandService);
+        DashboardController controller = new DashboardController(
+                deviceService, ViewManager.getInstance().getCommandService()
+        );
         controller.init(dashboardView);
 
         ViewManager.getInstance().showDashboard(dashboardView.build());
