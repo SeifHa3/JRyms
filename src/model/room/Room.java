@@ -3,7 +3,7 @@ package model.room;
 public class Room {
     private String id;
 
-    public getId(){
+    public String getId(){
         return id;
     }
 }
