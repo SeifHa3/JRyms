@@ -26,9 +26,8 @@ public class ViewManager {
         this.primaryStage = stage;
     }
 
-    public void showDashboard() {
-        DashboardView view = new DashboardView();
-        Scene scene = new Scene(view.build(), 800, 600);
+    public void showDashboard(javafx.scene.layout.VBox root) {
+        javafx.scene.Scene scene = new javafx.scene.Scene(root, 800, 600);
         primaryStage.setScene(scene);
         primaryStage.setTitle(util.AppConstants.APP_NAME);
         primaryStage.show();

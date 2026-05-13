@@ -31,6 +31,11 @@ public class DashboardController implements DeviceObserver {
 
     public void init(DashboardView view) {
         this.view = view;
+
+        view.getAddDeviceBtn().setOnAction(e -> onAddDeviceClick());
+        view.getUndoBtn().setOnAction(e -> onUndoClick());
+        view.getRedoBtn().setOnAction(e -> onRedoClick());
+
         EventBus.getInstance().subscribe(
                 AppConstants.EventType.DEVICE_ADDED, e -> Platform.runLater(this::refreshDashboard)
         );

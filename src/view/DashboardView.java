@@ -1,28 +1,29 @@
 package view;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.geometry.Insets;
 
 public class DashboardView {
 
     private VBox deviceRowsBox;
+    private Button addDeviceBtn;
+    private Button undoBtn;
+    private Button redoBtn;
 
     public DashboardView() {
         deviceRowsBox = new VBox(8);
+        addDeviceBtn  = new Button("+ Add Device");
+        undoBtn       = new Button("Undo");
+        redoBtn       = new Button("Redo");
     }
 
     public VBox build() {
-
         Label titleLabel = new Label("SmartHome Controller");
         titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-
-        Button addDeviceBtn = new Button("+ Add Device");
-        Button undoBtn = new Button("Undo");
-        Button redoBtn = new Button("Redo");
 
         HBox topBar = new HBox(10, titleLabel, addDeviceBtn, undoBtn, redoBtn);
         topBar.setPadding(new Insets(10));
@@ -36,7 +37,8 @@ public class DashboardView {
         return root;
     }
 
-    public VBox getDeviceRowsBox() {
-        return deviceRowsBox;
-    }
+    public VBox getDeviceRowsBox()  { return deviceRowsBox; }
+    public Button getAddDeviceBtn() { return addDeviceBtn; }
+    public Button getUndoBtn()      { return undoBtn; }
+    public Button getRedoBtn()      { return redoBtn; }
 }

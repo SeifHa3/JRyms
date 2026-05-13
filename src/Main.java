@@ -22,7 +22,7 @@ public class Main extends Application {
         DashboardController controller = new DashboardController(deviceService, commandService);
         controller.init(dashboardView);
 
-        ViewManager.getInstance().showDashboard();
+        ViewManager.getInstance().showDashboard(dashboardView.build());
     }
 
     private void bootstrapDevices() {
