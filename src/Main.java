@@ -27,10 +27,16 @@ public class Main extends Application {
 
     private void bootstrapDevices() {
         DeviceRegistry registry = DeviceRegistry.getInstance();
+        service.RoomService roomService = new service.RoomService();
+
         SmartAC ac1 = new SmartAC("ac1", "Living Room AC");
         SmartAC ac2 = new SmartAC("ac2", "Bedroom AC");
+
         registry.register(ac1);
         registry.register(ac2);
+
+        roomService.assignDeviceToRoom("ac1", "room1");
+        roomService.assignDeviceToRoom("ac2", "room2");
     }
 
     public static void main(String[] args) {

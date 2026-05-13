@@ -26,19 +26,46 @@ public abstract class DeviceDecorator extends SmartDevice {
     }
 
     @Override
-    public Room getRoom()                        { return wrapped.getRoom(); }
+    public Room getRoom()                        {
+        return wrapped.getRoom();
+    }
+
     @Override
-    public void setRoom(Room room)               { wrapped.setRoom(room); }
+    public void setRoom(Room room)               {
+        wrapped.setRoom(room);
+    }
+
     @Override
-    public DeviceStatus getStatus()              { return wrapped.getStatus(); }
+    public DeviceStatus getStatus()              {
+        return wrapped.getStatus();
+    }
+
     @Override
-    public void setStatus(DeviceStatus status)   { wrapped.setStatus(status); }
+    public void setStatus(DeviceStatus status)   {
+        wrapped.setStatus(status);
+    }
+
     @Override
-    public String getName()                      { return wrapped.getName(); }
+    public String getName()                      {
+        return wrapped.getName();
+    }
+
     @Override
-    public void setName(String name)             { wrapped.setName(name); }
+    public void setName(String name)             {
+        wrapped.setName(name);
+    }
+
     @Override
-    public void addObserver(DeviceObserver o)    { wrapped.addObserver(o); }
+    public void addObserver(DeviceObserver o)    {
+        wrapped.addObserver(o);
+    }
+
     @Override
-    public void removeObserver(DeviceObserver o) { wrapped.removeObserver(o); }
+    public void removeObserver(DeviceObserver o) {
+        wrapped.removeObserver(o);
+    }
+
+    public SmartDevice getWrapped(){
+        return wrapped;
+    }
 }

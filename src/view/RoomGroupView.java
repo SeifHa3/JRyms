@@ -1,5 +1,6 @@
 package view;
 
+import decorator.DeviceDecorator;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,7 +9,6 @@ import javafx.scene.layout.VBox;
 import model.device.SmartAC;
 import model.device.SmartDevice;
 import model.room.Room;
-import view.ViewManager;
 
 public class RoomGroupView {
 
@@ -32,9 +32,8 @@ public class RoomGroupView {
             Button controlBtn = new Button("Control");
 
             controlBtn.setOnAction(e -> {
-                if (device instanceof SmartAC) {
-                    ViewManager.getInstance().showACControl((SmartAC) device);
-                }
+                SmartAC ac = extractAC(device);
+                if (ac != null) ViewManager.getInstance().showACControl(ac);
             });
 
             HBox row = new HBox(15, nameLabel, statusLabel, controlBtn);
@@ -43,5 +42,13 @@ public class RoomGroupView {
         }
 
         return section;
+    }
+
+    private SmartAC extractAC(SmartDevice device) {
+        if (device instanceof SmartAC) return (SmartAC) device;
+        if (device instanceof DeviceDecorator) {
+            return extractAC(((DeviceDecorator) device).getWrapped());
+        }
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -19,6 +20,7 @@ import view.RoomGroupView;
 import view.ViewManager;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DashboardController implements DeviceObserver {
 
@@ -51,27 +53,40 @@ public class DashboardController implements DeviceObserver {
         VBox rows = view.getDeviceRowsBox();
         rows.getChildren().clear();
 
+        // rooms with devices
         List<Room> rooms = new service.RoomService().getAllRooms();
         for (Room room : rooms) {
             if (room.getDeviceCount() > 0) {
                 rows.getChildren().add(new RoomGroupView(room).buildSection());
             }
         }
-    }
 
-    private HBox buildDeviceRow(SmartDevice device) {
-        Label nameLabel   = new Label(device.getName());
-        Label statusLabel = new Label(device.getStatus().toString());
-        Button controlBtn = new Button("Control");
+        // unassigned devices
+        List<SmartDevice> unassigned = deviceService.getAllDevices().stream()
+                .filter(d -> d.getRoom() == null)
+                .collect(Collectors.toList());
 
-        controlBtn.setOnAction(e -> {
-            if (device instanceof SmartAC) {
-                ViewManager.getInstance().showACControl((SmartAC) device);
+        if (!unassigned.isEmpty()) {
+            Label unassignedLabel = new Label("📦  Unassigned");
+            unassignedLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+            VBox section = new VBox(6);
+            section.setPadding(new Insets(8, 0, 8, 0));
+            section.getChildren().add(unassignedLabel);
+
+            for (SmartDevice d : unassigned) {
+                Label nameLabel   = new Label(d.getName());
+                Label statusLabel = new Label(d.getStatus().toString());
+                Button controlBtn = new Button("Control");
+                controlBtn.setOnAction(e -> {
+                    if (d instanceof SmartAC)
+                        ViewManager.getInstance().showACControl((SmartAC) d);
+                });
+                HBox row = new HBox(15, nameLabel, statusLabel, controlBtn);
+                row.setPadding(new Insets(2, 0, 2, 16));
+                section.getChildren().add(row);
             }
-        });
-
-        HBox row = new HBox(15, nameLabel, statusLabel, controlBtn);
-        return row;
+            rows.getChildren().add(section);
+        }
     }
 
     public void onUndoClick() { commandService.undo(); }
