@@ -8,7 +8,7 @@ public class SmartAC extends SmartDevice {
     public enum ACMode {
         COOL,
         HEAT,
-        Fan,
+        FAN,
         AUTO
     }
     public enum FanSpeed {
@@ -53,6 +53,7 @@ public class SmartAC extends SmartDevice {
 
     public void setFanSpeed(FanSpeed fanSpeed) {
         this.fanSpeed = fanSpeed;
+        notifyObservers(new DeviceEvent(id, AppConstants.EventType.DEVICE_STATE_CHANGED, fanSpeed));
     }
 
     public ACMode getMode() {
@@ -61,6 +62,7 @@ public class SmartAC extends SmartDevice {
 
     public void setMode(ACMode mode) {
         this.mode = mode;
+        notifyObservers(new DeviceEvent(id, AppConstants.EventType.MODE_CHANGED, mode));
     }
 
     public double getTargetTemp() {
@@ -69,12 +71,13 @@ public class SmartAC extends SmartDevice {
 
     public void setTargetTemp(double targetTemp) {
         this.targetTemp = targetTemp;
+        notifyObservers(new DeviceEvent(id, AppConstants.EventType.TEMP_CHANGED, targetTemp));
     }
 
     public double getCurrentTemp() {
         return currentTemp;
     }
-    
+
 
     @Override
     public String getStatusSummary() {
