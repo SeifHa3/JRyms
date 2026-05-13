@@ -1,6 +1,8 @@
 package model.hub;
 
 import model.device.SmartDevice;
+import util.Aggregate;
+import util.Iterator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 //import java.util.concurrent.ConcurrentHashMap;
 
-public class DeviceRegistry {
+public class DeviceRegistry implements Aggregate<SmartDevice> {
     private static volatile DeviceRegistry instance;
     private final Map<String, SmartDevice> devices = new HashMap<>();
 
@@ -44,5 +46,10 @@ public class DeviceRegistry {
 
     public boolean contains(String id){
         return devices.containsKey(id);
+    }
+
+    @Override
+    public Iterator<SmartDevice> createIterator() {
+        return new DeviceIterator(new ArrayList<>(devices.values()));
     }
 }
