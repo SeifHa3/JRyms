@@ -2,7 +2,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import model.device.SmartAC;
 import model.hub.DeviceRegistry;
-import service.CommandService;
 import service.DeviceService;
 import controller.DashboardController;
 import view.DashboardView;
@@ -19,7 +18,8 @@ public class Main extends Application {
 
         DashboardView dashboardView = new DashboardView();
         DashboardController controller = new DashboardController(
-                deviceService, ViewManager.getInstance().getCommandService()
+                deviceService,
+                ViewManager.getInstance().getCommandService()
         );
         controller.init(dashboardView);
 
