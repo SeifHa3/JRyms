@@ -1,6 +1,5 @@
 package view;
 
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.device.SmartAC;
 
@@ -24,6 +23,22 @@ public class ViewManager {
 
     public void init(Stage stage) {
         this.primaryStage = stage;
+    }
+
+    public void showDashboard() {
+        service.DeviceService deviceService = new service.DeviceService();
+        service.CommandService commandService = new service.CommandService();
+
+        DashboardView dashboardView = new DashboardView();
+        controller.DashboardController ctrl = new controller.DashboardController(
+                deviceService, commandService
+        );
+        ctrl.init(dashboardView);
+
+        javafx.scene.Scene scene = new javafx.scene.Scene(dashboardView.build(), 800, 600);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle(util.AppConstants.APP_NAME);
+        primaryStage.show();
     }
 
     public void showDashboard(javafx.scene.layout.VBox root) {
