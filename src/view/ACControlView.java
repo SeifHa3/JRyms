@@ -14,7 +14,8 @@ public class ACControlView {
     private Slider tempSlider;
     private ToggleGroup modeGroup;
     private ToggleButton coolBtn, heatBtn, fanBtn, autoBtn;
-    private Button lowBtn, medBtn, highBtn;
+    private ToggleGroup fanGroup;
+    private ToggleButton lowBtn, medBtn, highBtn;
     private Button undoBtn, redoBtn, backBtn;
 
     public ACControlView() {
@@ -37,9 +38,13 @@ public class ACControlView {
         fanBtn.setToggleGroup(modeGroup);
         autoBtn.setToggleGroup(modeGroup);
 
-        lowBtn  = new Button("LOW");
-        medBtn  = new Button("MED");
-        highBtn = new Button("HIGH");
+        fanGroup = new ToggleGroup();
+        lowBtn  = new ToggleButton("LOW");
+        medBtn  = new ToggleButton("MED");
+        highBtn = new ToggleButton("HIGH");
+        lowBtn.setToggleGroup(fanGroup);
+        medBtn.setToggleGroup(fanGroup);
+        highBtn.setToggleGroup(fanGroup);
 
         undoBtn = new Button("Undo");
         redoBtn = new Button("Redo");
@@ -50,8 +55,8 @@ public class ACControlView {
         nameLabel.setText("AC Control — " + ac.getName());
         nameLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
-        HBox modeBox = new HBox(8, coolBtn, heatBtn, fanBtn, autoBtn);
-        HBox fanBox  = new HBox(8, new Label("Fan:"), lowBtn, medBtn, highBtn);
+        HBox modeBox   = new HBox(8, coolBtn, heatBtn, fanBtn, autoBtn);
+        HBox fanBox    = new HBox(8, new Label("Fan:"), lowBtn, medBtn, highBtn);
         HBox actionBox = new HBox(10, undoBtn, redoBtn, backBtn);
 
         VBox root = new VBox(12,
@@ -68,19 +73,19 @@ public class ACControlView {
         return root;
     }
 
-    // getters for controller to wire up
-    public Button getOnOffBtn()       { return onOffBtn; }
-    public Label getTempLabel()       { return tempLabel; }
-    public Slider getTempSlider()     { return tempSlider; }
-    public ToggleGroup getModeGroup() { return modeGroup; }
-    public ToggleButton getCoolBtn()  { return coolBtn; }
-    public ToggleButton getHeatBtn()  { return heatBtn; }
-    public ToggleButton getFanBtn()   { return fanBtn; }
-    public ToggleButton getAutoBtn()  { return autoBtn; }
-    public Button getLowBtn()         { return lowBtn; }
-    public Button getMedBtn()         { return medBtn; }
-    public Button getHighBtn()        { return highBtn; }
-    public Button getUndoBtn()        { return undoBtn; }
-    public Button getRedoBtn()        { return redoBtn; }
-    public Button getBackBtn()        { return backBtn; }
+    public Button getOnOffBtn()          { return onOffBtn; }
+    public Label getTempLabel()          { return tempLabel; }
+    public Slider getTempSlider()        { return tempSlider; }
+    public ToggleGroup getModeGroup()    { return modeGroup; }
+    public ToggleButton getCoolBtn()     { return coolBtn; }
+    public ToggleButton getHeatBtn()     { return heatBtn; }
+    public ToggleButton getFanBtn()      { return fanBtn; }
+    public ToggleButton getAutoBtn()     { return autoBtn; }
+    public ToggleGroup getFanGroup()     { return fanGroup; }
+    public ToggleButton getLowBtn()      { return lowBtn; }
+    public ToggleButton getMedBtn()      { return medBtn; }
+    public ToggleButton getHighBtn()     { return highBtn; }
+    public Button getUndoBtn()           { return undoBtn; }
+    public Button getRedoBtn()           { return redoBtn; }
+    public Button getBackBtn()           { return backBtn; }
 }
