@@ -78,6 +78,9 @@ public class SmartAC extends SmartDevice {
         return currentTemp;
     }
 
+    public boolean isOn(){
+        return isOn;
+    }
 
     @Override
     public String getStatusSummary() {
