@@ -34,8 +34,13 @@ public class ViewManager {
     }
 
     public void showACControl(SmartAC ac) {
-        // M4 will implement ACControlView
-        // placeholder for now
+        ACControlView view = new ACControlView();
+        controller.ACController controller = new controller.ACController(ac,
+                new service.CommandService());
+        controller.init(view);
+        javafx.scene.Scene scene = new javafx.scene.Scene(view.build(ac), 500, 450);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public void showAddDevice() {
