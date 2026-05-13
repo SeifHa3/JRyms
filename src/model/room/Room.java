@@ -32,4 +32,9 @@ public class Room {
     public String getName()                { return name; }
     public String getIcon()                { return icon; }
     public void setName(String name)       { this.name = name; }
+
+    @Override
+    public String toString() { //yallaaa beeeenaaaa
+        return icon + " " + name;
+    }
 }

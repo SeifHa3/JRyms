@@ -2,6 +2,8 @@ package model.device;
 import model.command.Command;
 import model.hub.DeviceEvent;
 import model.room.Room;
+import observer.DeviceObserver;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -8,12 +8,14 @@ import javafx.scene.layout.VBox;
 import model.device.SmartAC;
 import model.device.SmartDevice;
 import model.hub.DeviceEvent;
-import model.device.DeviceObserver;
+import model.room.Room;
+import observer.DeviceObserver;
 import service.CommandService;
 import service.DeviceService;
 import util.AppConstants;
 import util.EventBus;
 import view.DashboardView;
+import view.RoomGroupView;
 import view.ViewManager;
 
 import java.util.List;
@@ -49,9 +51,11 @@ public class DashboardController implements DeviceObserver {
         VBox rows = view.getDeviceRowsBox();
         rows.getChildren().clear();
 
-        List<SmartDevice> devices = deviceService.getAllDevices();
-        for (SmartDevice device : devices) {
-            rows.getChildren().add(buildDeviceRow(device));
+        List<Room> rooms = new service.RoomService().getAllRooms();
+        for (Room room : rooms) {
+            if (room.getDeviceCount() > 0) {
+                rows.getChildren().add(new RoomGroupView(room).buildSection());
+            }
         }
     }
 

@@ -44,7 +44,10 @@ public class ViewManager {
     }
 
     public void showAddDevice() {
-        // M5 will implement AddDeviceFlow
-        // placeholder for now
+        AddDeviceFlow flow = new AddDeviceFlow(
+                new service.AddDeviceService(),
+                new service.RoomService()
+        );
+        flow.show();
     }
 }

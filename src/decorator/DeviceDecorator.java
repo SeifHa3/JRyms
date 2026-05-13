@@ -1,10 +1,9 @@
 package decorator;
 
 import model.command.Command;
-import model.device.DeviceObserver;
+import observer.DeviceObserver;
 import model.device.DeviceStatus;
 import model.device.SmartDevice;
-import model.hub.DeviceEvent;
 import model.room.Room;
 
 public abstract class DeviceDecorator extends SmartDevice {

@@ -1,4 +1,4 @@
-package model.device;
+package observer;
 
 import model.hub.DeviceEvent;
 

@@ -5,7 +5,7 @@ import model.command.ACSetFanSpeedCommand;
 import model.command.ACSetModeCommand;
 import model.command.ACSetTempCommand;
 import model.command.ACToggleCommand;
-import model.device.DeviceObserver;
+import observer.DeviceObserver;
 import model.device.SmartAC;
 import model.hub.DeviceEvent;
 import service.CommandService;
