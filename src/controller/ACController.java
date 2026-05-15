@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import model.command.ACSetFanSpeedCommand;
 import model.command.ACSetModeCommand;
@@ -9,6 +10,7 @@ import observer.DeviceObserver;
 import model.device.SmartAC;
 import model.hub.DeviceEvent;
 import service.CommandService;
+import util.UIStyles;
 import view.ACControlView;
 import view.ViewManager;
 
@@ -40,7 +42,7 @@ public class ACController implements DeviceObserver {
 
         view.getModeGroup().selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal == null || updatingUI) return;
-            if (newVal == view.getCoolBtn())      onModeSelect(SmartAC.ACMode.COOL);
+            if      (newVal == view.getCoolBtn()) onModeSelect(SmartAC.ACMode.COOL);
             else if (newVal == view.getHeatBtn()) onModeSelect(SmartAC.ACMode.HEAT);
             else if (newVal == view.getFanBtn())  onModeSelect(SmartAC.ACMode.FAN);
             else if (newVal == view.getAutoBtn()) onModeSelect(SmartAC.ACMode.AUTO);
@@ -48,17 +50,14 @@ public class ACController implements DeviceObserver {
 
         view.getFanGroup().selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal == null || updatingUI) return;
-            if (newVal == view.getLowBtn())        onFanSpeedSelect(SmartAC.FanSpeed.LOW);
-            else if (newVal == view.getMedBtn())   onFanSpeedSelect(SmartAC.FanSpeed.MED);
-            else if (newVal == view.getHighBtn())  onFanSpeedSelect(SmartAC.FanSpeed.HIGH);
+            if      (newVal == view.getLowBtn())  onFanSpeedSelect(SmartAC.FanSpeed.LOW);
+            else if (newVal == view.getMedBtn())  onFanSpeedSelect(SmartAC.FanSpeed.MED);
+            else if (newVal == view.getHighBtn()) onFanSpeedSelect(SmartAC.FanSpeed.HIGH);
         });
 
         view.getUndoBtn().setOnAction(e -> { commandService.undo(); refreshButtonStates(); });
         view.getRedoBtn().setOnAction(e -> { commandService.redo(); refreshButtonStates(); });
-
-        view.getBackBtn().setOnAction(e ->
-                ViewManager.getInstance().showDashboard()
-        );
+        view.getBackBtn().setOnAction(e -> ViewManager.getInstance().showDashboard());
     }
 
     public void onToggle() {
@@ -73,11 +72,13 @@ public class ACController implements DeviceObserver {
 
     public void onModeSelect(SmartAC.ACMode mode) {
         commandService.execute(new ACSetModeCommand(ac, mode));
+        applyToggleStyles();
         refreshButtonStates();
     }
 
     public void onFanSpeedSelect(SmartAC.FanSpeed speed) {
         commandService.execute(new ACSetFanSpeedCommand(ac, speed));
+        applyToggleStyles();
         refreshButtonStates();
     }
 
@@ -86,21 +87,38 @@ public class ACController implements DeviceObserver {
         view.getRedoBtn().setDisable(!commandService.canRedo());
     }
 
+    private void applyToggleStyles() {
+        for (Toggle t : view.getModeGroup().getToggles()) {
+            ToggleButton tb = (ToggleButton) t;
+            tb.setStyle(tb.isSelected() ? UIStyles.TOGGLE_SELECTED : UIStyles.TOGGLE_UNSELECTED);
+        }
+        for (Toggle t : view.getFanGroup().getToggles()) {
+            ToggleButton tb = (ToggleButton) t;
+            tb.setStyle(tb.isSelected() ? UIStyles.TOGGLE_SELECTED : UIStyles.TOGGLE_UNSELECTED);
+        }
+    }
+
     public void refreshUI() {
         updatingUI = true;
 
-        view.getOnOffBtn().setText(ac.isOn() ? "Turn OFF" : "Turn ON");
-        view.getTempLabel().setText("Target Temp: " + ac.getTargetTemp() + "°C");
+        // ON/OFF button
+        view.getOnOffBtn().setText(ac.isOn() ? "⏻  Turn OFF" : "⏻  Turn ON");
+        view.getOnOffBtn().setStyle(ac.isOn() ? UIStyles.BTN_DANGER : UIStyles.BTN_SUCCESS);
+
+        // Temperature
+        view.getTempLabel().setText(String.format("%.1f°C", ac.getTargetTemp()));
         view.getTempSlider().setValue(ac.getTargetTemp());
 
-        ToggleButton toSelect = switch (ac.getMode()) {
+        // Mode
+        ToggleButton modeToSelect = switch (ac.getMode()) {
             case COOL -> view.getCoolBtn();
             case HEAT -> view.getHeatBtn();
             case FAN  -> view.getFanBtn();
             case AUTO -> view.getAutoBtn();
         };
-        toSelect.setSelected(true);
+        modeToSelect.setSelected(true);
 
+        // Fan speed
         ToggleButton fanToSelect = switch (ac.getFanSpeed()) {
             case LOW  -> view.getLowBtn();
             case MED  -> view.getMedBtn();
@@ -110,6 +128,7 @@ public class ACController implements DeviceObserver {
 
         updatingUI = false;
 
+        applyToggleStyles();
         refreshButtonStates();
     }
 

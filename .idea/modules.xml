@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JRyms.iml" filepath="$PROJECT_DIR$/JRyms.iml" />
+      <module fileurl="file://$USER_HOME$/OneDrive/Desktop/JavaFX-Files/javafx-sdk-26.0.1/lib/lib.iml" filepath="$USER_HOME$/OneDrive/Desktop/JavaFX-Files/javafx-sdk-26.0.1/lib/lib.iml" />
     </modules>
   </component>
 </project>

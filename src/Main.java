@@ -15,27 +15,22 @@ public class Main extends Application {
         bootstrapDevices();
 
         DeviceService deviceService = new DeviceService();
-
         DashboardView dashboardView = new DashboardView();
         DashboardController controller = new DashboardController(
                 deviceService,
                 ViewManager.getInstance().getCommandService()
         );
         controller.init(dashboardView);
-
         ViewManager.getInstance().showDashboard(dashboardView.build());
     }
 
     private void bootstrapDevices() {
         DeviceRegistry registry = DeviceRegistry.getInstance();
         service.RoomService roomService = new service.RoomService();
-
         SmartAC ac1 = new SmartAC("ac1", "Living Room AC");
         SmartAC ac2 = new SmartAC("ac2", "Bedroom AC");
-
         registry.register(ac1);
         registry.register(ac2);
-
         roomService.assignDeviceToRoom("ac1", "room1");
         roomService.assignDeviceToRoom("ac2", "room2");
     }
